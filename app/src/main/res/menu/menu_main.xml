@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.facom.avaliacao1.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_toggle_theme"
+        android:title="Alternar Tema"
         app:showAsAction="never" />
 </menu>
