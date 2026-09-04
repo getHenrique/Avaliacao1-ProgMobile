@@ -4,6 +4,10 @@
     <color name="colorPrimaryVariant">#1B5920</color>
     <color name="colorOnPrimary">#FFFFFF</color>
 
+    <color name="colorSecondary">#0099FB</color>
+    <color name="colorSecondaryVariant">#052E50</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
+
     <!-- Light Mode -->
     <color name="backgroundColorLight">#F5F5F6</color>
     <color name="textColorPrimaryLight">#212121</color>
