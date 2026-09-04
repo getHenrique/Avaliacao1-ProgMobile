@@ -42,13 +42,11 @@ public class FilterFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRegions.setAdapter(adapter);
 
-        // 2. Escutar a seleção e trocar a imagem + atualizar o ViewModel
         spinnerRegions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedRegion = parent.getItemAtPosition(position).toString();
 
-                // Troca a imagem exibida conforme a posição escolhida
                 int imageResId = getRegionImageResource(position);
                 imgRegion.setImageResource(imageResId);
 
@@ -65,19 +63,19 @@ public class FilterFragment extends Fragment {
     private int getRegionImageResource(int position) {
         switch (position) {
             case 1:
-                return R.drawable.ic_launcher_background; // Substitua pelo seu R.drawable.img_rota_norte
+                return R.drawable.mapa_rota_norte; // Substitua pelo seu R.drawable.img_rota_norte
             case 2:
-                return R.drawable.ic_launcher_background; // Substitua pelo seu R.drawable.img_pantanal
+                return R.drawable.mapa_pantanal; // Substitua pelo seu R.drawable.img_pantanal
             case 3:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.mapa_costa_leste;
             case 4:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.mapa_bonito;
             case 5:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.mapa_caminho_ipes;
             case 6:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.mapa_grande_dourados;
             case 7:
-                return R.drawable.ic_launcher_background;
+                return R.drawable.mapa_cone_sul;
             default:
                 return R.drawable.mapa_atual_do_ms;
         }
