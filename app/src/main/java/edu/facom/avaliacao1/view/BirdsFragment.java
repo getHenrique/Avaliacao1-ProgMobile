@@ -75,25 +75,25 @@ public class BirdsFragment extends Fragment {
     private void populateData() {
         birds = new ArrayList<>();
 
-        birds.add(new Bird("Bem-te-vi", "Pantanal", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Pantanal", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Tuiuiú", "Pantanal", R.drawable.avtuiuiu, R.raw.cantoavetuiuiu));
+        birds.add(new Bird("Colheiro", "Pantanal", R.drawable.colheiro, R.raw.cantocolhereiro));
 
-        birds.add(new Bird("Bem-te-vi", "Rota Norte", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Rota Norte", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Tucano", "Rota Norte", R.drawable.avetucanotoco, R.raw.cantoavetucano));
+        birds.add(new Bird("Carcara", "Rota Norte", R.drawable.avecarcara, R.raw.avecarcara));
 
-        birds.add(new Bird("Bem-te-vi", "Costa Leste e Vale do Aporé", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Costa Leste e Vale do Aporé", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Papagaio Verde", "Costa Leste e Vale do Aporé", R.drawable.avepapagaioverdadeiro, R.raw.cantoavepapagaioverde));
+        birds.add(new Bird("João de Barro", "Costa Leste e Vale do Aporé", R.drawable.avejoaodebarro, R.raw.cantojoaodebarro));
 
-        birds.add(new Bird("Bem-te-vi", "Bonito / Serra da Bodoquena", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Bonito / Serra da Bodoquena", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Udu Coroa Azul", "Bonito / Serra da Bodoquena", R.drawable.aveuducoroaazul, R.raw.cantoaveuducoroaazul));
+        birds.add(new Bird("Mutum de Penacho", "Bonito / Serra da Bodoquena", R.drawable.avemutumpenacho, R.raw.mutumpenacho));
 
-        birds.add(new Bird("Bem-te-vi", "Caminho dos Ipês", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Caminho dos Ipês", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Arara Caninde", "Caminho dos Ipês", R.drawable.aveararacaninde, R.raw.cantoaveararacaninde));
+        birds.add(new Bird("Sabiá", "Caminho dos Ipês", R.drawable.avesabia, R.raw.bemtevi));
 
-        birds.add(new Bird("Bem-te-vi", "Caminhos da Fronteira e Grande Dourados", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Caminhos da Fronteira e Grande Dourados", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Seriema", "Caminhos da Fronteira e Grande Dourados", R.drawable.aveseriema, R.raw.cantoaveseriema));
+        birds.add(new Bird("Periquito Rico", "Caminhos da Fronteira e Grande Dourados", R.drawable.aveperiquitorico, R.raw.aveperiquitorico));
 
-        birds.add(new Bird("Bem-te-vi", "Vale das Águas e Cone Sul", R.drawable.bemtevi, R.raw.bemtevi));
-        birds.add(new Bird("Bem-te-vi", "Vale das Águas e Cone Sul", R.drawable.bemtevi, R.raw.bemtevi));
+        birds.add(new Bird("Narceja", "Vale das Águas e Cone Sul", R.drawable.avenarceja, R.raw.cantoavenarceja));
+        birds.add(new Bird("João Bobo", "Vale das Águas e Cone Sul", R.drawable.avejoaobobo, R.raw.cantoavejoaobobo));
     }
 }
