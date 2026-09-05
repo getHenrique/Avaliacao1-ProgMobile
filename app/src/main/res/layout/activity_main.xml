@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--Onde fica o Toolbar (menu_main.xml)-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -12,6 +13,7 @@
         app:titleTextColor="?attr/colorOnPrimary"
         android:layout_alignParentTop="true" />
 
+    <!--Onde os frames aparecem-->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -19,6 +21,7 @@
         android:layout_above="@id/bottom_navigation"
         android:layout_below="@id/toolbar" />
 
+    <!--Onde fica o Bottom Navigation (bottom_nav_menu.xml)-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

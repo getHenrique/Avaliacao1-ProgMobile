@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // 2. Configurar Bottom Navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
@@ -48,13 +47,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // 3. Iniciar com o Fragmento de Filtro (se for a primeira vez)
         if (savedInstanceState == null) {
             bottomNav.setSelectedItemId(R.id.nav_filter);
         }
     }
-
-    // --- LÓGICA DO MENU SUPERIOR E MODO NOTURNO ---
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,10 +70,8 @@ public class MainActivity extends AppCompatActivity {
     private void toggleTheme() {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-            // Mudar para o Modo Claro
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else {
-            // Mudar para o Modo Escuro
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
     }

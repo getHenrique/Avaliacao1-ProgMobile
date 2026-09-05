@@ -30,7 +30,6 @@ public class FilterFragment extends Fragment {
 
         regionViewModel = new ViewModelProvider(requireActivity()).get(RegionViewModel.class);
 
-        // 1. Vincular a ImageView
         imgRegion = view.findViewById(R.id.region_map);
         Spinner spinnerRegions = view.findViewById(R.id.spinner_regions);
 
@@ -63,9 +62,9 @@ public class FilterFragment extends Fragment {
     private int getRegionImageResource(int position) {
         switch (position) {
             case 1:
-                return R.drawable.mapa_rota_norte; // Substitua pelo seu R.drawable.img_rota_norte
+                return R.drawable.mapa_rota_norte;
             case 2:
-                return R.drawable.mapa_pantanal; // Substitua pelo seu R.drawable.img_pantanal
+                return R.drawable.mapa_pantanal;
             case 3:
                 return R.drawable.mapa_costa_leste;
             case 4:
