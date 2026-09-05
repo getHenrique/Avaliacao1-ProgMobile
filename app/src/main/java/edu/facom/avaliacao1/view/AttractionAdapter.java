@@ -36,15 +36,13 @@ public class AttractionAdapter extends ArrayAdapter<Attraction> {
         TextView txtDesc = convertView.findViewById(R.id.txt_attraction_desc);
 
         if (attraction != null) {
-            // Lembre-se de verificar se os nomes dos seus getters estão assim
             txtName.setText(attraction.getName());
             txtDesc.setText(attraction.getDescription());
 
-            // Usamos try-catch caso a imagem do placeholder ainda não exista no drawable
             try {
                 imgAttraction.setImageResource(attraction.getImageResId());
             } catch (Exception e) {
-                imgAttraction.setImageResource(R.drawable.ic_launcher_background); // fallback
+                imgAttraction.setImageResource(R.drawable.ic_launcher_background);
             }
         }
 

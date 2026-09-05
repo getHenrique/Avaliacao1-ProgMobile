@@ -3,8 +3,8 @@ package edu.facom.avaliacao1.model;
 public class Attraction {
     private String name;
     private String description;
-    private String region; // Para sabermos a qual região do Spinner ele pertence
-    private int imageResId; // Guarda o ID da image na pasta drawable (ex: R.drawable.img_pantanal)
+    private String region;
+    private int imageResId;
 
     public Attraction(String name, String description, String region, int imageResId) {
         this.name = name;

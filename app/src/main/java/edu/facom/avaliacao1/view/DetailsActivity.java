@@ -28,7 +28,6 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // Instanciar Views
         imgDetail = findViewById(R.id.img_detail);
         txtTitle = findViewById(R.id.txt_detail_title);
         txtDescription = findViewById(R.id.txt_detail_description);
@@ -36,7 +35,6 @@ public class DetailsActivity extends AppCompatActivity {
         btnPlay = findViewById(R.id.btn_play);
         btnFinish = findViewById(R.id.btn_finish);
 
-        // Receber dados da Intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String type = extras.getString("TIPO", "");
@@ -61,7 +59,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
         }
 
-        // Botão Encerrar: remove a activity da pilha e retorna à tela principal
         btnFinish.setOnClickListener(v -> finish());
     }
 
@@ -70,18 +67,30 @@ public class DetailsActivity extends AppCompatActivity {
             if (soundResId != 0) {
                 if (mediaPlayer == null) {
                     mediaPlayer = MediaPlayer.create(this, soundResId);
+                    if (mediaPlayer == null) {
+                        Toast.makeText(this, "Erro ao carregar o áudio", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    
+                    mediaPlayer.setOnCompletionListener(mp -> {
+                        btnPlay.setText("Ouvir Canto");
+                        mp.seekTo(0);
+                    });
                 }
-                if (!mediaPlayer.isPlaying()) {
+
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    btnPlay.setText("Ouvir Canto");
+                } else {
                     mediaPlayer.start();
+                    btnPlay.setText("Pausar Canto");
                 }
             } else {
-                Toast.makeText(this, "Arquivo de áudio não encontrado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Canto não disponível para esta ave", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    // REGRA OBRIGATÓRIA: Gestão do áudio no ciclo de vida
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -89,7 +98,7 @@ public class DetailsActivity extends AppCompatActivity {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
             }
-            mediaPlayer.release(); // Libera a memória alocada ao MediaPlayer
+            mediaPlayer.release();
             mediaPlayer = null;
         }
     }

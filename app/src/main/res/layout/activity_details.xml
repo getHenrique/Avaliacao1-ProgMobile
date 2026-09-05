@@ -54,7 +54,6 @@
 
         </LinearLayout>
 
-        <!-- Botão Encerrar -->
         <Button
             android:id="@+id/btn_finish"
             android:layout_width="match_parent"

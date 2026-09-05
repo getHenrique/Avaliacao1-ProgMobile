@@ -14,7 +14,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/bemtevi" /> <!-- Placeholder -->
+        android:src="@drawable/bemtevi" />
 
     <TextView
         android:id="@+id/txt_bird_name"

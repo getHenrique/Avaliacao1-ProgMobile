@@ -16,7 +16,6 @@ import java.util.List;
 import edu.facom.avaliacao1.R;
 import edu.facom.avaliacao1.model.Bird;
 import edu.facom.avaliacao1.viewmodel.RegionViewModel;
-// import edu.facom.avaliacao1.DetailsActivity; // Descomente no Passo 7
 
 public class BirdsFragment extends Fragment {
 
@@ -36,17 +35,14 @@ public class BirdsFragment extends Fragment {
 
         gridView = view.findViewById(R.id.grid_view_birds);
 
-        // 1. Instanciar dados fictícios
         populateData();
 
         filteredBirds = new ArrayList<>();
         adapter = new BirdAdapter(requireContext(), filteredBirds);
         gridView.setAdapter(adapter);
 
-        // 2. Conectar ao Shared ViewModel
         regionViewModel = new ViewModelProvider(requireActivity()).get(RegionViewModel.class);
 
-        // 3. Observar alterações na região selecionada
         regionViewModel.getRegion().observe(getViewLifecycleOwner(), selectedRegion -> {
             filteredBirds.clear();
             for (Bird bird : birds) {
@@ -57,7 +53,6 @@ public class BirdsFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
-        // 4. Clique na ave da grade
         gridView.setOnItemClickListener((parent, view1, position, id) -> {
             Bird clickedBird = filteredBirds.get(position);
 
