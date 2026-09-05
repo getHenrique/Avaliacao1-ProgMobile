@@ -13,7 +13,7 @@
         app:titleTextColor="?attr/colorOnPrimary"
         android:layout_alignParentTop="true" />
 
-    <!--Onde os frames aparecem-->
+    <!--Onde os fragments aparecem-->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

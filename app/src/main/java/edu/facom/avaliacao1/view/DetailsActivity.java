@@ -35,6 +35,7 @@ public class DetailsActivity extends AppCompatActivity {
         btnPlay = findViewById(R.id.btn_play);
         btnFinish = findViewById(R.id.btn_finish);
 
+        // Receber dados da Intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String type = extras.getString("TIPO", "");
@@ -59,9 +60,11 @@ public class DetailsActivity extends AppCompatActivity {
             }
         }
 
+        // Botão Encerrar: remove a activity da pilha e retorna à tela principal
         btnFinish.setOnClickListener(v -> finish());
     }
 
+    // Funcionamento do botão de áudio
     private void setupMediaPlayer() {
         btnPlay.setOnClickListener(v -> {
             if (soundResId != 0) {
@@ -91,6 +94,7 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
 
+    // Quando a atividade é destruída, o mediaplayer também é
     @Override
     protected void onDestroy() {
         super.onDestroy();

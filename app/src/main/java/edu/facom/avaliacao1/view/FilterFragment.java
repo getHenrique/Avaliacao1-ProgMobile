@@ -33,6 +33,7 @@ public class FilterFragment extends Fragment {
         imgRegion = view.findViewById(R.id.region_map);
         Spinner spinnerRegions = view.findViewById(R.id.spinner_regions);
 
+        // Alimenta o spinner com as regiões
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(),
                 R.array.regions,
@@ -41,14 +42,16 @@ public class FilterFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRegions.setAdapter(adapter);
 
+        // Ação do spinner
         spinnerRegions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedRegion = parent.getItemAtPosition(position).toString();
 
                 int imageResId = getRegionImageResource(position);
-                imgRegion.setImageResource(imageResId);
+                imgRegion.setImageResource(imageResId);// Troca imagem do ImageView
 
+                // Seleção da região
                 if (position > 0) {
                     regionViewModel.setRegion(selectedRegion);
                 }

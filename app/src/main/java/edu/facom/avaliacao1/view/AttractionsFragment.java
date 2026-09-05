@@ -36,49 +36,48 @@ public class AttractionsFragment extends Fragment {
 
         listView = view.findViewById(R.id.list_view_attractions);
 
-        // 1. Inicializar lista com dados fictícios (Placeholders)
+        // Alimenta a lista
         populateData();
 
         filteredAttractions = new ArrayList<>();
         adapter = new AttractionAdapter(requireContext(), filteredAttractions);
         listView.setAdapter(adapter);
 
-        // 2. Conectar ao Shared ViewModel da Activity Principal
+        // Conecta com o viewomodel e verifiqua qual a região selecionada pelo spinner
         regionViewModel = new ViewModelProvider(requireActivity()).get(RegionViewModel.class);
-
-        // 3. OBSERVAR o ViewModel (A Mágica da Reatividade)
         regionViewModel.getRegion().observe(getViewLifecycleOwner(), selectedRegion -> {
-            // Toda vez que o Spinner do Filtro mudar, este bloco é executado
+            // Toda vez que o spinner do fragmento de filtro mudar, este bloco é executado
             filteredAttractions.clear();
-
             for (Attraction attraction : allAttractions) {
                 if (attraction.getRegion().equals(selectedRegion)) {
                     filteredAttractions.add(attraction);
                 }
             }
-            // Avisa o adaptador que os dados mudaram para recarregar a ListView
             adapter.notifyDataSetChanged();
         });
 
-        // 4. Configurar Clique na Lista (INTENT)
+        // Listener para seleção de item na lista
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Attraction clickedItem = filteredAttractions.get(position);
 
+            // Cria intent para entrar na activity
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
 
-            // Empacotando os dados (putExtra)
+            // Pega os dados do model Attraction
             intent.putExtra("TIPO", "TURISMO");
             intent.putExtra("NOME", clickedItem.getName());
             intent.putExtra("DESCRICAO", clickedItem.getDescription());
             intent.putExtra("IMAGEM_ID", clickedItem.getImageResId());
 
+            // Inicia activity com dados da atração turística
             startActivity(intent);
         });
     }
 
+    // Atrações turísticas
     private void populateData() {
         allAttractions = new ArrayList<>();
-        // Note que a String da região DEVE ser idêntica ao que está no strings.xml
+
         allAttractions.add(new Attraction("Cânion do Engano", "Impressionantes formações rochosas e paredões de arenito.", "Rota Norte", R.drawable.ponto01caniondoengano));
         allAttractions.add(new Attraction("Gruta do Pitoco", "Trilha ecológica fantástica com cachoeiras exuberantes.", "Rota Norte", R.drawable.ponto02grutapitoco));
 

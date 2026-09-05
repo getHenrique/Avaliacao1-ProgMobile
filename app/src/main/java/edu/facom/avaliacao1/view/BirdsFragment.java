@@ -35,15 +35,17 @@ public class BirdsFragment extends Fragment {
 
         gridView = view.findViewById(R.id.grid_view_birds);
 
+        // Alimenta o grid
         populateData();
 
         filteredBirds = new ArrayList<>();
         adapter = new BirdAdapter(requireContext(), filteredBirds);
         gridView.setAdapter(adapter);
 
+        // Conecta com o viewomodel e verifiqua qual a região selecionada pelo spinner
         regionViewModel = new ViewModelProvider(requireActivity()).get(RegionViewModel.class);
-
         regionViewModel.getRegion().observe(getViewLifecycleOwner(), selectedRegion -> {
+            // Toda vez que o spinner do fragmento de filtro mudar, este bloco é executado
             filteredBirds.clear();
             for (Bird bird : birds) {
                 if (bird.getRegion().equals(selectedRegion)) {
@@ -53,20 +55,25 @@ public class BirdsFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
+        // Listener para seleção de item na lista
         gridView.setOnItemClickListener((parent, view1, position, id) -> {
             Bird clickedBird = filteredBirds.get(position);
 
+            // Cria intent para entrar na activity
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
 
+            // Pega os dados do model Bird
             intent.putExtra("TIPO", "AVE");
             intent.putExtra("NOME", clickedBird.getName());
             intent.putExtra("IMAGEM_ID", clickedBird.getImageResId());
             intent.putExtra("SOM_ID", clickedBird.getSoundResId());
 
+            // Inicia activity com dados do pássaro
             startActivity(intent);
         });
     }
 
+    // Pássaros
     private void populateData() {
         birds = new ArrayList<>();
 
