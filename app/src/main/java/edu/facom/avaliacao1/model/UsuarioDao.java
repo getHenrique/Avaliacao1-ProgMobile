@@ -1,0 +1,20 @@
+package edu.facom.avaliacao1.model;
+
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
+
+@Dao
+public interface UsuarioDao {
+
+    @Insert
+    void inserirUsuario(Usuario usuario);
+
+    @Update
+    void atualizarUsuario(Usuario usuario);
+
+    // Método útil para verificar se já existe o usuário ou fazer login futuro
+    @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome LIMIT 1")
+    Usuario buscarUsuarioPorNome(String nome);
+}
