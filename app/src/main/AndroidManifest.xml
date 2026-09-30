@@ -30,10 +30,19 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CadastroActivity"
+            android:name=".view.CadastroActivity"
             android:exported="false"
             android:title="Cadastro de Usuário">
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="edu.facom.avaliacao1.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

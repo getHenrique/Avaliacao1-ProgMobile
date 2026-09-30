@@ -5,13 +5,13 @@ plugins {
 android {
     namespace = "edu.facom.avaliacao1"
     compileSdk {
-        version = release(34)
+        version = release(36)
     }
 
     defaultConfig {
         applicationId = "edu.facom.avaliacao1"
         minSdk = 24
-        targetSdk = 34 //alterar para 37
+        targetSdk = 36 //alterar para 37
         versionCode = 1
         versionName = "1.0"
 
