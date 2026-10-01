@@ -5,13 +5,13 @@ plugins {
 android {
     namespace = "edu.facom.avaliacao1"
     compileSdk {
-        version = release(37)
+        version = release(36)
     }
 
     defaultConfig {
         applicationId = "edu.facom.avaliacao1"
         minSdk = 24
-        targetSdk = 37
+        targetSdk = 36 //alterar para 37
         versionCode = 1
         versionName = "1.0"
 
@@ -44,4 +44,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+    val room_version = "2.6.1"
+    val lifecycle_version = "2.6.2"
+
+    // Room Database
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // ViewModel e LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle_version")
 }
