@@ -70,9 +70,14 @@ public class CadastroActivity extends AppCompatActivity {
         viewModel.getCadastroSucesso().observe(this, sucesso -> {
             if (sucesso) {
                 Toast.makeText(this, "Utilizador guardado com sucesso!", Toast.LENGTH_LONG).show();
+
+                // Redireciona para a Tela Principal
+                Intent intent = new Intent(CadastroActivity.this, edu.facom.avaliacao1.MainActivity.class);
+                startActivity(intent);
+
                 finish(); // Fecha a ecrã após o sucesso
             } else {
-                Toast.makeText(this, "Erro ao guardar utilizador.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Erro ao guardar usuário.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -84,22 +89,28 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void abrirCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Garante que existe uma app de câmara para resolver a Intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File arquivoFoto = null;
-            try {
-                arquivoFoto = criarArquivoDeImagem();
-            } catch (IOException ex) {
-                Toast.makeText(this, "Erro ao criar ficheiro para a foto", Toast.LENGTH_SHORT).show();
-            }
 
-            if (arquivoFoto != null) {
-                // Aqui usamos o provider que configuramos no Manifest
-                uriFotoCorrente = FileProvider.getUriForFile(this,
-                        "edu.facom.avaliacao1.fileprovider",
-                        arquivoFoto);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFotoCorrente);
+        File arquivoFoto = null;
+        try {
+            arquivoFoto = criarArquivoDeImagem();
+        } catch (IOException ex) {
+            Toast.makeText(this, "Erro ao criar ficheiro para a foto.", Toast.LENGTH_SHORT).show();
+            return; // Sai do método se falhar
+        }
+
+        if (arquivoFoto != null) {
+            // Usa o provider configurado no Manifest
+            uriFotoCorrente = FileProvider.getUriForFile(this,
+                    "edu.facom.avaliacao1.fileprovider",
+                    arquivoFoto);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFotoCorrente);
+
+            try {
+                // Tenta abrir a aplicação de câmara nativa
                 cameraLauncher.launch(takePictureIntent);
+            } catch (android.content.ActivityNotFoundException e) {
+                // Se o emulador ou telemóvel não tiver nenhuma câmara instalada, cai aqui
+                Toast.makeText(this, "Nenhuma aplicação de câmara encontrada neste dispositivo.", Toast.LENGTH_LONG).show();
             }
         }
     }
