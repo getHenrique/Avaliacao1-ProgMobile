@@ -43,8 +43,9 @@ public class CadastroViewModel extends AndroidViewModel {
                 // 1. Criptografar a senha usando a classe utilitária
                 String senhaCriptografada = CriptografiaUtils.gerarHashSenha(senha);
 
-                // 2. Criar a entidade Usuario com os dados e a senha já em hash
+                // 2. Criar a entidade Usuario com os dados e a senha já em hash, e definir o usuário como logado
                 Usuario novoUsuario = new Usuario(nome, senhaCriptografada, caminhoFoto);
+                novoUsuario.sessaoAtiva = true;
 
                 // 3. Salvar no banco
                 usuarioDao.inserirUsuario(novoUsuario);
