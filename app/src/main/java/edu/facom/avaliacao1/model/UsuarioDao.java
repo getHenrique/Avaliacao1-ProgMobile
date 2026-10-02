@@ -17,4 +17,10 @@ public interface UsuarioDao {
     // Método útil para verificar se já existe o usuário ou fazer login futuro
     @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome LIMIT 1")
     Usuario buscarUsuarioPorNome(String nome);
+
+    @Query("SELECT * FROM usuarios WHERE sessaoAtiva = 1 LIMIT 1")
+    Usuario buscarUsuarioLogado();
+
+    @Query("UPDATE usuarios SET sessaoAtiva = 0")
+    void encerrarSessoes();
 }

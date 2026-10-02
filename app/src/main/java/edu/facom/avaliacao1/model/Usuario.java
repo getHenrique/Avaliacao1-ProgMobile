@@ -15,6 +15,9 @@ public class Usuario {
 
     public String caminhoFoto;
 
+    // Adicione dentro da classe Usuario
+    public boolean sessaoAtiva;
+
 
     public Usuario() {
     }

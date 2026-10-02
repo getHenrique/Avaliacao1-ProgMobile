@@ -69,7 +69,7 @@ public class CadastroActivity extends AppCompatActivity {
         // Observar o resultado do salvamento
         viewModel.getCadastroSucesso().observe(this, sucesso -> {
             if (sucesso) {
-                Toast.makeText(this, "Utilizador guardado com sucesso!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Usuário guardado com sucesso!", Toast.LENGTH_LONG).show();
 
                 // Redireciona para a Tela Principal
                 Intent intent = new Intent(CadastroActivity.this, edu.facom.avaliacao1.MainActivity.class);

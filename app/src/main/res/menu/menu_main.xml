@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Mostra o nome da aplicação as opçõs de menu-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="edu.facom.avaliacao1.MainActivity">
-    <!--Opção de alterar tema-->
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_toggle_theme"
         android:title="Alternar Tema"
-        app:showAsAction="never" /><!--Item escondido nos três pontinhos-->
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_editar_perfil"
+        android:title="Editar Perfil"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Sair"
+        app:showAsAction="never" />
 </menu>

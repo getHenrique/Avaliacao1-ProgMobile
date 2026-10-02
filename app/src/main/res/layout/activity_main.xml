@@ -11,7 +11,19 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:titleTextColor="?attr/colorOnPrimary"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true">
+
+        <!-- Avatar do Utilizador Logado -->
+        <ImageView
+            android:id="@+id/imgAvatarToolbar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/ic_launcher_background" /> <!-- Substitua por um placeholder redondo se preferir -->
+
+    </androidx.appcompat.widget.Toolbar>
 
     <!--Onde os fragments aparecem-->
     <FrameLayout
