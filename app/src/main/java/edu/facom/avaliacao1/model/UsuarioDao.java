@@ -17,4 +17,7 @@ public interface UsuarioDao {
     // Método útil para verificar se já existe o usuário ou fazer login futuro
     @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome LIMIT 1")
     Usuario buscarUsuarioPorNome(String nome);
+    // Método para validar login de usuario
+    @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome AND senha = :senhaCriptografada LIMIT 1")
+    Usuario validarLogin(String nome, String senhaCriptografada);
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:gravity="center"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bem-vindo(a)!"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginBottom="40dp" />
+
+    <EditText
+        android:id="@+id/edit_text_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome de Usuário"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/edit_text_senha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btn_entrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entrar"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/text_view_cadastrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Não tem uma conta? Cadastre-se"
+        android:textAlignment="center"
+        android:textColor="@android:color/system_control_normal_dark"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp" />
+
+</LinearLayout>
