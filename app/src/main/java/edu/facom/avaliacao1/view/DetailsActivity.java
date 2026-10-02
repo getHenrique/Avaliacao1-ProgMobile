@@ -1,6 +1,7 @@
 package edu.facom.avaliacao1.view;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Button btnPlay, btnFinish;
 
     private MediaPlayer mediaPlayer;
-    private int soundResId = 0;
+    private String soundUriStr = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +36,20 @@ public class DetailsActivity extends AppCompatActivity {
         btnPlay = findViewById(R.id.btn_play);
         btnFinish = findViewById(R.id.btn_finish);
 
-        // Receber dados da Intent
+        // Uso de string resource para o botão de voltar/encerrar
+        btnFinish.setText(getString(R.string.btn_exit));
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String type = extras.getString("TIPO", "");
             String title = extras.getString("NOME", "");
-            int imageResId = extras.getInt("IMAGEM_ID", 0);
+            String imageUriStr = extras.getString("IMAGEM_URI", "");
 
             txtTitle.setText(title);
 
-            if (imageResId != 0) {
-                imgDetail.setImageResource(imageResId);
+            if (!imageUriStr.isEmpty()) {
+                // Carrega a imagem a partir do URI da base de dados
+                imgDetail.setImageURI(Uri.parse(imageUriStr));
             }
 
             if ("TURISMO".equals(type)) {
@@ -53,30 +57,30 @@ public class DetailsActivity extends AppCompatActivity {
                 txtDescription.setText(description);
                 layoutAudioPlayer.setVisibility(View.GONE);
             } else if ("AVE".equals(type)) {
-                soundResId = extras.getInt("SOM_ID", 0);
-                txtDescription.setText("Espécie nativa da região. Clique abaixo para ouvir seu canto característico e aprender sobre sua ficha técnica no ecossistema local.");
+                soundUriStr = extras.getString("SOM_URI", "");
+                // Idealmente coloque esta string no strings.xml e chame com getString()
+                txtDescription.setText("Espécie nativa da região. Clique abaixo para ouvir o seu canto característico.");
                 layoutAudioPlayer.setVisibility(View.VISIBLE);
                 setupMediaPlayer();
             }
         }
 
-        // Botão Encerrar: remove a activity da pilha e retorna à tela principal
         btnFinish.setOnClickListener(v -> finish());
     }
 
-    // Funcionamento do botão de áudio
     private void setupMediaPlayer() {
         btnPlay.setOnClickListener(v -> {
-            if (soundResId != 0) {
+            if (soundUriStr != null && !soundUriStr.isEmpty()) {
                 if (mediaPlayer == null) {
-                    mediaPlayer = MediaPlayer.create(this, soundResId);
+                    // Carrega o áudio a partir do URI
+                    mediaPlayer = MediaPlayer.create(this, Uri.parse(soundUriStr));
                     if (mediaPlayer == null) {
                         Toast.makeText(this, "Erro ao carregar o áudio", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    
+
                     mediaPlayer.setOnCompletionListener(mp -> {
-                        btnPlay.setText("Ouvir Canto");
+                        btnPlay.setText("Ouvir Canto"); // Sugestão: colocar no strings.xml
                         mp.seekTo(0);
                     });
                 }
@@ -86,7 +90,7 @@ public class DetailsActivity extends AppCompatActivity {
                     btnPlay.setText("Ouvir Canto");
                 } else {
                     mediaPlayer.start();
-                    btnPlay.setText("Pausar Canto");
+                    btnPlay.setText("Pausar Canto"); // Sugestão: colocar no strings.xml
                 }
             } else {
                 Toast.makeText(this, "Canto não disponível para esta ave", Toast.LENGTH_SHORT).show();
@@ -94,7 +98,6 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
 
-    // Quando a atividade é destruída, o mediaplayer também é
     @Override
     protected void onDestroy() {
         super.onDestroy();

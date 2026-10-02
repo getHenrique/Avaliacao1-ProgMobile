@@ -72,7 +72,7 @@ public class CadastroActivity extends AppCompatActivity {
                 Toast.makeText(this, "Utilizador guardado com sucesso!", Toast.LENGTH_LONG).show();
 
                 // Redireciona para a Tela Principal
-                Intent intent = new Intent(CadastroActivity.this, edu.facom.avaliacao1.MainActivity.class);
+                Intent intent = new Intent(CadastroActivity.this, edu.facom.avaliacao1.view.MainActivity.class);
                 startActivity(intent);
 
                 finish(); // Fecha a ecrã após o sucesso

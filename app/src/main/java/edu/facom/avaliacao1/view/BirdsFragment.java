@@ -22,7 +22,6 @@ public class BirdsFragment extends Fragment {
     private RegionViewModel regionViewModel;
     private GridView gridView;
     private BirdAdapter adapter;
-    private List<Bird> birds;
     private List<Bird> filteredBirds;
 
     public BirdsFragment() {
@@ -32,70 +31,31 @@ public class BirdsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         gridView = view.findViewById(R.id.grid_view_birds);
-
-        // Alimenta o grid
-        populateData();
 
         filteredBirds = new ArrayList<>();
         adapter = new BirdAdapter(requireContext(), filteredBirds);
         gridView.setAdapter(adapter);
 
-        // Conecta com o viewomodel e verifiqua qual a região selecionada pelo spinner
         regionViewModel = new ViewModelProvider(requireActivity()).get(RegionViewModel.class);
-        regionViewModel.getRegion().observe(getViewLifecycleOwner(), selectedRegion -> {
-            // Toda vez que o spinner do fragmento de filtro mudar, este bloco é executado
+
+        regionViewModel.getBirdsForRegion().observe(getViewLifecycleOwner(), birdsList -> {
             filteredBirds.clear();
-            for (Bird bird : birds) {
-                if (bird.getRegion().equals(selectedRegion)) {
-                    filteredBirds.add(bird);
-                }
+            if (birdsList != null) {
+                filteredBirds.addAll(birdsList);
             }
             adapter.notifyDataSetChanged();
         });
 
-        // Listener para seleção de item na lista
         gridView.setOnItemClickListener((parent, view1, position, id) -> {
             Bird clickedBird = filteredBirds.get(position);
-
-            // Cria intent para entrar na activity
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
-
-            // Pega os dados do model Bird
             intent.putExtra("TIPO", "AVE");
-            intent.putExtra("NOME", clickedBird.getName());
-            intent.putExtra("IMAGEM_ID", clickedBird.getImageResId());
-            intent.putExtra("SOM_ID", clickedBird.getSoundResId());
-
-            // Inicia activity com dados do pássaro
+            intent.putExtra("NOME", clickedBird.name);
+            intent.putExtra("IMAGEM_URI", clickedBird.imageUri); // Mudou para URI
+            intent.putExtra("SOM_URI", clickedBird.soundUri);    // Mudou para URI
             startActivity(intent);
         });
     }
 
-    // Pássaros
-    private void populateData() {
-        birds = new ArrayList<>();
-
-        birds.add(new Bird("Tuiuiú", "Pantanal", R.drawable.avtuiuiu, R.raw.cantoavetuiuiu));
-        birds.add(new Bird("Colheiro", "Pantanal", R.drawable.colheiro, R.raw.cantocolhereiro));
-
-        birds.add(new Bird("Tucano", "Rota Norte", R.drawable.avetucanotoco, R.raw.cantoavetucano));
-        birds.add(new Bird("Carcara", "Rota Norte", R.drawable.avecarcara, R.raw.avecarcara));
-
-        birds.add(new Bird("Papagaio Verde", "Costa Leste e Vale do Aporé", R.drawable.avepapagaioverdadeiro, R.raw.cantoavepapagaioverde));
-        birds.add(new Bird("João de Barro", "Costa Leste e Vale do Aporé", R.drawable.avejoaodebarro, R.raw.cantojoaodebarro));
-
-        birds.add(new Bird("Udu Coroa Azul", "Bonito / Serra da Bodoquena", R.drawable.aveuducoroaazul, R.raw.cantoaveuducoroaazul));
-        birds.add(new Bird("Mutum de Penacho", "Bonito / Serra da Bodoquena", R.drawable.avemutumpenacho, R.raw.mutumpenacho));
-
-        birds.add(new Bird("Arara Caninde", "Caminho dos Ipês", R.drawable.aveararacaninde, R.raw.cantoaveararacaninde));
-        birds.add(new Bird("Sabiá", "Caminho dos Ipês", R.drawable.avesabia, R.raw.bemtevi));
-
-        birds.add(new Bird("Seriema", "Caminhos da Fronteira e Grande Dourados", R.drawable.aveseriema, R.raw.cantoaveseriema));
-        birds.add(new Bird("Periquito Rico", "Caminhos da Fronteira e Grande Dourados", R.drawable.aveperiquitorico, R.raw.aveperiquitorico));
-
-        birds.add(new Bird("Narceja", "Vale das Águas e Cone Sul", R.drawable.avenarceja, R.raw.cantoavenarceja));
-        birds.add(new Bird("João Bobo", "Vale das Águas e Cone Sul", R.drawable.avejoaobobo, R.raw.cantoavejoaobobo));
-    }
 }

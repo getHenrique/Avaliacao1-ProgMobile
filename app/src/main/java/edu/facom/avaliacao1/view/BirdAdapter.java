@@ -49,11 +49,11 @@ public class BirdAdapter extends BaseAdapter {
         ImageView imgBird = convertView.findViewById(R.id.img_bird);
         TextView txtName = convertView.findViewById(R.id.txt_bird_name);
 
+        // Em BirdAdapter.java
         if (bird != null) {
-            txtName.setText(bird.getName());
-
+            txtName.setText(bird.name);
             try {
-                imgBird.setImageResource(bird.getImageResId());
+                imgBird.setImageURI(android.net.Uri.parse(bird.imageUri));
             } catch (Exception e) {
                 imgBird.setImageResource(R.drawable.ic_launcher_background);
             }

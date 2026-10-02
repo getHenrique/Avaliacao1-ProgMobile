@@ -1,20 +1,28 @@
 package edu.facom.avaliacao1.model;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "birds",
+        foreignKeys = @ForeignKey(entity = Region.class,
+                parentColumns = "id", // Corrigido de "idRegiao" para "id"
+                childColumns = "regiaoId",
+                onDelete = ForeignKey.CASCADE))
 public class Bird {
-    private String name;
-    private String region;
-    private int imageResId;
-    private int soundResId;
 
-    public Bird(String name, String region, int imageResId, int soundResId) {
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public String name;
+
+    public int regiaoId;
+    public String imageUri;
+    public String soundUri;
+
+    public Bird(String name, int regiaoId, String imageUri, String soundUri) {
         this.name = name;
-        this.region = region;
-        this.imageResId = imageResId;
-        this.soundResId = soundResId;
+        this.regiaoId = regiaoId;
+        this.imageUri = imageUri;
+        this.soundUri = soundUri;
     }
-
-    public String getName() { return name; }
-    public String getRegion() { return region; }
-    public int getImageResId() { return imageResId; }
-    public int getSoundResId() { return soundResId; }
 }

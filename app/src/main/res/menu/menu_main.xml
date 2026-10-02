@@ -3,7 +3,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="edu.facom.avaliacao1.MainActivity">
+    tools:context="edu.facom.avaliacao1.view.MainActivity">
     <!--Opção de alterar tema-->
     <item
         android:id="@+id/action_toggle_theme"

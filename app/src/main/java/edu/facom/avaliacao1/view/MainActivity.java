@@ -1,4 +1,4 @@
-package edu.facom.avaliacao1;
+package edu.facom.avaliacao1.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,9 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import edu.facom.avaliacao1.view.AttractionsFragment;
-import edu.facom.avaliacao1.view.BirdsFragment;
-import edu.facom.avaliacao1.view.FilterFragment;
+import edu.facom.avaliacao1.R;
 
 public class MainActivity extends AppCompatActivity {
 

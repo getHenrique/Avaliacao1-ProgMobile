@@ -6,16 +6,6 @@
     <string name="third_fragment_label">Terceiro Fragmento</string>
     <string name="next">Próximo</string>
     <string name="previous">Anterior</string>
-    <string name="btn_exit">Encerrar</string>
+    <string name="btn_exit">Voltar</string>
     <string name="txt_region_selection">Selecione uma Região:</string>
-    <string-array name="regions">
-        <item>Nada Selecionado</item>
-        <item>Rota Norte</item>
-        <item>Pantanal</item>
-        <item>Costa Leste e Vale do Aporé</item>
-        <item>Bonito / Serra da Bodoquena</item>
-        <item>Caminho dos Ipês</item>
-        <item>Caminhos da Fronteira e Grande Dourados</item>
-        <item>Vale das Águas e Cone Sul</item>
-    </string-array>
 </resources>

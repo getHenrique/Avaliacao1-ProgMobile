@@ -33,70 +33,32 @@ public class AttractionsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         listView = view.findViewById(R.id.list_view_attractions);
-
-        // Alimenta a lista
-        populateData();
 
         filteredAttractions = new ArrayList<>();
         adapter = new AttractionAdapter(requireContext(), filteredAttractions);
         listView.setAdapter(adapter);
 
-        // Conecta com o viewomodel e verifiqua qual a região selecionada pelo spinner
         regionViewModel = new ViewModelProvider(requireActivity()).get(RegionViewModel.class);
-        regionViewModel.getRegion().observe(getViewLifecycleOwner(), selectedRegion -> {
-            // Toda vez que o spinner do fragmento de filtro mudar, este bloco é executado
+
+        // Observa as atrações já filtradas pelo banco
+        regionViewModel.getAttractionsForRegion().observe(getViewLifecycleOwner(), attractions -> {
             filteredAttractions.clear();
-            for (Attraction attraction : allAttractions) {
-                if (attraction.getRegion().equals(selectedRegion)) {
-                    filteredAttractions.add(attraction);
-                }
+            if (attractions != null) {
+                filteredAttractions.addAll(attractions);
             }
             adapter.notifyDataSetChanged();
         });
 
-        // Listener para seleção de item na lista
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Attraction clickedItem = filteredAttractions.get(position);
-
-            // Cria intent para entrar na activity
             Intent intent = new Intent(requireContext(), DetailsActivity.class);
-
-            // Pega os dados do model Attraction
             intent.putExtra("TIPO", "TURISMO");
             intent.putExtra("NOME", clickedItem.getName());
             intent.putExtra("DESCRICAO", clickedItem.getDescription());
-            intent.putExtra("IMAGEM_ID", clickedItem.getImageResId());
-
-            // Inicia activity com dados da atração turística
+            intent.putExtra("IMAGEM_URI", clickedItem.getImageUri()); // Mudou para URI
             startActivity(intent);
         });
     }
 
-    // Atrações turísticas
-    private void populateData() {
-        allAttractions = new ArrayList<>();
-
-        allAttractions.add(new Attraction("Cânion do Engano", "Impressionantes formações rochosas e paredões de arenito.", "Rota Norte", R.drawable.ponto01caniondoengano));
-        allAttractions.add(new Attraction("Gruta do Pitoco", "Trilha ecológica fantástica com cachoeiras exuberantes.", "Rota Norte", R.drawable.ponto02grutapitoco));
-
-        allAttractions.add(new Attraction("Estrada parque do Pantanal", "Rota cênica para observação da rica fauna e flora pantaneira.", "Pantanal", R.drawable.ponto01estradaparquepantanal));
-        allAttractions.add(new Attraction("Fazenda San Fracisco", "Safári fotográfico e passeios inesquecíveis de chalana.", "Pantanal", R.drawable.ponto02fazendasanfrancisco));
-
-        allAttractions.add(new Attraction("Balneario Três Lagos", "Área de lazer com praias tranquilas de água doce.", "Costa Leste e Vale do Aporé", R.drawable.ponto01balneariotreslagos));
-        allAttractions.add(new Attraction("Ponte do Ferroviaria", "Marco histórico e arquitetônico imponente sobre o Rio Paraná.", "Costa Leste e Vale do Aporé", R.drawable.ponto02ponterodoferroviaria));
-
-        allAttractions.add(new Attraction("Gruta da Lagoa Azul", "Famosa caverna com um espelho d'água de azul intenso.", "Bonito / Serra da Bodoquena", R.drawable.ponto01grutadolagoazul));
-        allAttractions.add(new Attraction("Rios da Prata", "Flutuação relaxante em águas cristalinas repletas de peixes.", "Bonito / Serra da Bodoquena", R.drawable.ponto02riosdaprata));
-
-        allAttractions.add(new Attraction("Bioparque do Pantanal", "O maior complexo de aquários de água doce do mundo.", "Caminho dos Ipês", R.drawable.ponto01bioparquepantanal));
-        allAttractions.add(new Attraction("Parque das nações indígenas", "Ampla reserva ecológica e espaço de lazer na capital.", "Caminho dos Ipês", R.drawable.ponto02parquedasnacoesindigenas));
-
-        allAttractions.add(new Attraction("Salto do rio Aporé", "Belas quedas d'água cercadas pela natureza preservada.", "Caminhos da Fronteira e Grande Dourados", R.drawable.ponto01_saltodorioapore));
-        allAttractions.add(new Attraction("Parque dos Ipês", "Tradicional espaço de convivência, cultura e lazer em Dourados.", "Caminhos da Fronteira e Grande Dourados", R.drawable.ponto02parquedosipes));
-
-        allAttractions.add(new Attraction("Parque estadual das Várzeas", "Importante área de conservação da bacia do rio Ivinhema.", "Vale das Águas e Cone Sul", R.drawable.ponto01_parqueestadualdasvarzeas));
-        allAttractions.add(new Attraction("Casa do Artesão", "Centro de valorização da cultura e do belo artesanato regional.", "Vale das Águas e Cone Sul", R.drawable.ponto02casadoartesao));
-    }
 }
