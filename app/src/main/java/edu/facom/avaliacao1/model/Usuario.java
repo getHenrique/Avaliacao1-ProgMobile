@@ -14,6 +14,8 @@ public class Usuario {
     public String senha;
 
     public String caminhoFoto;
+    
+    public boolean sessaoAtiva;
 
 
     public Usuario() {

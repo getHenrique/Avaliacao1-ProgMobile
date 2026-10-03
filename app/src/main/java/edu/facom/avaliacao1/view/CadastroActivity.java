@@ -63,6 +63,11 @@ public class CadastroActivity extends AppCompatActivity {
         btnTirarFoto = findViewById(R.id.btnTirarFoto);
         btnSalvarCadastro = findViewById(R.id.btnSalvarCadastro);
 
+        int idRecebido = getIntent().getIntExtra("ID_USUARIO", -1);
+        if (idRecebido != -1) {
+            btnSalvarCadastro.setText("Atualizar Perfil");
+        }
+
         // Inicializar o ViewModel
         viewModel = new ViewModelProvider(this).get(CadastroViewModel.class);
 

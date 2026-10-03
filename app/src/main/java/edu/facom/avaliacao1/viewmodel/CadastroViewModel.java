@@ -47,6 +47,9 @@ public class CadastroViewModel extends AndroidViewModel {
 
                 // 2. Criar a entidade Usuario com os dados e a senha já em hash
                 Usuario novoUsuario = new Usuario(nome, senhaCriptografada, caminhoFoto);
+                novoUsuario.sessaoAtiva = true; // Ativa a sessão do novo utilizador
+                usuarioDao.encerrarSessoes(); // Garante que não há mais ninguém logado
+                usuarioDao.inserirUsuario(novoUsuario);
 
                 // 3. Salvar no banco
                 usuarioDao.inserirUsuario(novoUsuario);
@@ -68,7 +71,15 @@ public class CadastroViewModel extends AndroidViewModel {
             try {
                 String senhaCriptografada = CriptografiaUtils.gerarHashSenha(senhaDigitada);
                 Usuario usuarioEncontrado = usuarioDao.validarLogin(nome, senhaCriptografada);
-                usuarioAtivo.postValue(usuarioEncontrado);
+                Usuario usuarioEncontrado = usuarioDao.validarLogin(nome, senhaCriptografada);
+                if (usuarioEncontrado != null) {
+                    usuarioDao.encerrarSessoes(); // Desloga outros
+                    usuarioEncontrado.sessaoAtiva = true;
+                    usuarioDao.atualizarUsuario(usuarioEncontrado); // Grava a sessão ativa no Room
+                    usuarioAtivo.postValue(usuarioEncontrado);
+                } else {
+                    usuarioAtivo.postValue(null);
+                }
             } catch (Exception e) {
                 usuarioAtivo.postValue(null);
             }

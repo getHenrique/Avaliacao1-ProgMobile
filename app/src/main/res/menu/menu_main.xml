@@ -9,4 +9,12 @@
         android:id="@+id/action_toggle_theme"
         android:title="Alternar Tema"
         app:showAsAction="never" /><!--Item escondido nos três pontinhos-->
+    <item
+        android:id="@+id/action_editar_perfil"
+        android:title="Editar Perfil"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Sair"
+        app:showAsAction="never" />
 </menu>

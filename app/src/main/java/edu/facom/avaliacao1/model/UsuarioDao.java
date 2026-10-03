@@ -20,4 +20,10 @@ public interface UsuarioDao {
     // Método para validar login de usuario
     @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome AND senha = :senhaCriptografada LIMIT 1")
     Usuario validarLogin(String nome, String senhaCriptografada);
+
+    @Query("SELECT * FROM usuarios WHERE sessaoAtiva = 1 LIMIT 1")
+    Usuario buscarUsuarioLogado();
+
+    @Query("UPDATE usuarios SET sessaoAtiva = 0")
+    void encerrarSessoes();
 }

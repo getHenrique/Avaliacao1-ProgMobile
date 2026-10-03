@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 import edu.facom.avaliacao1.R;
 
 // Atualiza a anotação para incluir todas as entidades e aumenta a versão para aplicar as alterações
-@Database(entities = {Usuario.class, Region.class, Bird.class, Attraction.class}, version = 4, exportSchema = false)
+@Database(entities = {Usuario.class, Region.class, Bird.class, Attraction.class}, version = 5, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UsuarioDao usuarioDao();
