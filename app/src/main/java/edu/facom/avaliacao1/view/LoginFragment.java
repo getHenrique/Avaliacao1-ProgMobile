@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import edu.facom.avaliacao1.R;
 import edu.facom.avaliacao1.viewmodel.CadastroViewModel;
@@ -32,6 +33,8 @@ public class LoginFragment extends Fragment {
         editTextSenha = view.findViewById(R.id.edit_text_senha);
         btnEntrar = view.findViewById(R.id.btn_entrar);
         textViewCadastrar = view.findViewById(R.id.text_view_cadastrar);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(CadastroViewModel.class);
 
         btnEntrar.setOnClickListener(v -> {
             String usuario = editTextUsuario.getText().toString();

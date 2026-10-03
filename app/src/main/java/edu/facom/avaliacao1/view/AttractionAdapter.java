@@ -38,9 +38,8 @@ public class AttractionAdapter extends ArrayAdapter<Attraction> {
         if (attraction != null) {
             txtName.setText(attraction.getName());
             txtDesc.setText(attraction.getDescription());
-
             try {
-                imgAttraction.setImageResource(attraction.getImageResId());
+                imgAttraction.setImageURI(android.net.Uri.parse(attraction.getImageUri()));
             } catch (Exception e) {
                 imgAttraction.setImageResource(R.drawable.ic_launcher_background);
             }
