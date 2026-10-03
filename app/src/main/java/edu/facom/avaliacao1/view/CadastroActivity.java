@@ -1,6 +1,8 @@
 package edu.facom.avaliacao1.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -75,15 +78,14 @@ public class CadastroActivity extends AppCompatActivity {
                 Intent intent = new Intent(CadastroActivity.this, edu.facom.avaliacao1.view.MainActivity.class);
                 startActivity(intent);
 
-                finish(); // Fecha a ecrã após o sucesso
+                finish(); // Fecha o ecrã após o sucesso
             } else {
-                Toast.makeText(this, "Erro ao guardar usuário.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Erro ao guardar utilizador.", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Configurar botões
         btnTirarFoto.setOnClickListener(v -> abrirCamera());
-
         btnSalvarCadastro.setOnClickListener(v -> salvarDados());
     }
 
@@ -127,9 +129,30 @@ public class CadastroActivity extends AppCompatActivity {
                 diretorioDeArmazenamento /* diretório */
         );
 
-        // Guarda o caminho absoluto para salvar na base de dados
+        // Guarda o caminho absoluto para encontrar o ficheiro depois
         caminhoAtualDaFoto = imagem.getAbsolutePath();
         return imagem;
+    }
+
+    // NOVO MÉTODO: Converte a imagem do ficheiro para um vetor de bytes redimensionado
+    private byte[] converterImagemParaBytes() {
+        try {
+            // Descodifica o ficheiro de imagem num Bitmap
+            Bitmap bitmap = BitmapFactory.decodeFile(caminhoAtualDaFoto);
+
+            if (bitmap != null) {
+                // Redimensiona a imagem (ex: 400x400) para evitar que o BLOB fique demasiado grande
+                Bitmap imagemRedimensionada = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Comprime a imagem em JPEG com 70% de qualidade
+                imagemRedimensionada.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+                return stream.toByteArray();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void salvarDados() {
@@ -146,7 +169,15 @@ public class CadastroActivity extends AppCompatActivity {
             return;
         }
 
-        // Chama o ViewModel para tratar de toda a lógica de gravação e criptografia
-        viewModel.salvarUsuario(nome, senha, caminhoAtualDaFoto);
+        // Converte a imagem para byte[] antes de enviar ao ViewModel
+        byte[] fotoBytes = converterImagemParaBytes();
+
+        if (fotoBytes == null) {
+            Toast.makeText(this, "Erro ao processar a fotografia.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Chama o ViewModel passando os dados e o vetor de bytes em vez da String
+        viewModel.salvarUsuario(nome, senha, fotoBytes);
     }
 }

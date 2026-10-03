@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Mostra o nome da aplicação as opçõs de menu-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.facom.avaliacao1.view.MainActivity">
-    <!--Opção de alterar tema-->
+
+    <!-- Avatar do utilizador na Toolbar -->
+    <item
+        android:id="@+id/action_profile_avatar"
+        android:title="Perfil"
+        app:showAsAction="always" />
+
+    <!-- Opção de Editar Perfil -->
+    <item
+        android:id="@+id/action_edit_profile"
+        android:title="Editar Perfil"
+        app:showAsAction="never" />
+
+    <!-- Opção de Sair (Logout) -->
+    <item
+        android:id="@+id/action_logout"
+        android:title="Sair"
+        app:showAsAction="never" />
+
+    <!-- Opção de alterar tema original -->
     <item
         android:id="@+id/action_toggle_theme"
         android:title="Alternar Tema"
-        app:showAsAction="never" /><!--Item escondido nos três pontinhos-->
+        app:showAsAction="never" />
 </menu>
