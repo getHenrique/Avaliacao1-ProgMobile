@@ -16,49 +16,56 @@ import edu.facom.avaliacao1.model.UsuarioDao;
 
 public class CadastroViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Usuario> usuarioAtivo = new MutableLiveData<>();
-    private UsuarioDao usuarioDao;
+    // Agora o usuarioAtivo é observado diretamente do Room para ser 100% reativo
+    private final LiveData<Usuario> usuarioAtivo;
+
+    private final UsuarioDao usuarioDao;
     private final ExecutorService executorService;
 
     // LiveData usado para avisar a View (Activity) se o salvamento deu certo ou errado
-    private MutableLiveData<Boolean> cadastroSucesso = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> cadastroSucesso = new MutableLiveData<>();
 
     public CadastroViewModel(@NonNull Application application) {
         super(application);
         // Inicializa o DAO através do AppDatabase
         usuarioDao = AppDatabase.getInstance(application).usuarioDao();
 
-        // Executor para rodar as tarefas de banco de dados fora da Thread Principal (UI Thread)
+        // Executor para rodar as tarefas de banco de dados fora da Thread Principal (UI Thread)[cite: 17]
         executorService = Executors.newSingleThreadExecutor();
-        usuarioAtivo.setValue(null);
+
+        // O Room retorna automaticamente o utilizador que tem isLogado == true
+        // Assumindo que você criou o método getUsuarioAtivo() no UsuarioDao
+        usuarioAtivo = usuarioDao.getUsuarioAtivo();
     }
 
-    // A View irá "observar" esse método
     public LiveData<Boolean> getCadastroSucesso() {
         return cadastroSucesso;
     }
 
-    public void salvarUsuario(String nome, String senha, String caminhoFoto) {
-        // Executa a operação em segundo plano
+    // CORREÇÃO: O parâmetro caminhoFoto (String) foi alterado para fotoPerfil (byte[])
+    public void salvarUsuario(String nome, String senha, byte[] fotoPerfil) {
         executorService.execute(() -> {
             try {
-                // 1. Criptografar a senha usando a classe utilitária
+                // 1. Criptografar a senha usando a classe utilitária[cite: 17]
                 String senhaCriptografada = CriptografiaUtils.gerarHashSenha(senha);
 
-                // 2. Criar a entidade Usuario com os dados e a senha já em hash
-                Usuario novoUsuario = new Usuario(nome, senhaCriptografada, caminhoFoto);
+                // 2. Criar a entidade Usuario com os dados, a senha já em hash e o array de bytes da foto
+                Usuario novoUsuario = new Usuario(nome, senhaCriptografada, fotoPerfil);
 
-                // 3. Salvar no banco
+                // (Opcional) Se quiser que o utilizador já fique logado logo após o cadastro:
+                // novoUsuario.isLogado = true;
+
+                // 3. Salvar no banco[cite: 17]
                 usuarioDao.inserirUsuario(novoUsuario);
 
-                // 4. Notificar a View (Activity) sobre o sucesso usando postValue (seguro para background thread)
+                // 4. Notificar a View (Activity) sobre o sucesso[cite: 17]
                 cadastroSucesso.postValue(true);
             } catch (Exception e) {
-                // Notificar falha
                 cadastroSucesso.postValue(false);
             }
         });
     }
+
     public LiveData<Usuario> getUsuarioAtivo() {
         return usuarioAtivo;
     }
@@ -68,10 +75,22 @@ public class CadastroViewModel extends AndroidViewModel {
             try {
                 String senhaCriptografada = CriptografiaUtils.gerarHashSenha(senhaDigitada);
                 Usuario usuarioEncontrado = usuarioDao.validarLogin(nome, senhaCriptografada);
-                usuarioAtivo.postValue(usuarioEncontrado);
+
+                if (usuarioEncontrado != null) {
+                    // Atualiza a flag na base de dados para indicar que este utilizador está com a sessão ativa
+                    usuarioDao.marcarComoLogado(usuarioEncontrado.getId());
+                    // O LiveData 'usuarioAtivo' vai atualizar automaticamente a MainActivity
+                }
             } catch (Exception e) {
-                usuarioAtivo.postValue(null);
+                // Falha no login, pode implementar um LiveData separado para avisar a View de erro se desejar
             }
+        });
+    }
+
+    public void fazerLogout() {
+        executorService.execute(() -> {
+            // Desmarca qualquer utilizador que esteja com a sessão ativa na base de dados
+            usuarioDao.fazerLogout();
         });
     }
 }

@@ -1,5 +1,6 @@
 package edu.facom.avaliacao1.model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -14,10 +15,25 @@ public interface UsuarioDao {
     @Update
     void atualizarUsuario(Usuario usuario);
 
-    // Método útil para verificar se já existe o usuário ou fazer login futuro
+    // Método útil para verificar se já existe o utilizador
     @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome LIMIT 1")
     Usuario buscarUsuarioPorNome(String nome);
-    // Método para validar login de usuario
+
+    // Método para validar login de utilizador
     @Query("SELECT * FROM usuarios WHERE nomeUsuario = :nome AND senha = :senhaCriptografada LIMIT 1")
     Usuario validarLogin(String nome, String senhaCriptografada);
+
+    // --- MÉTODOS DE GESTÃO DE SESSÃO REATIVA ---
+
+    // Observa e retorna o utilizador que está com a sessão ativa (isLogado = 1)
+    @Query("SELECT * FROM usuarios WHERE isLogado = 1 LIMIT 1")
+    LiveData<Usuario> getUsuarioAtivo();
+
+    // Marca um utilizador específico como logado após a validação do login
+    @Query("UPDATE usuarios SET isLogado = 1 WHERE id = :usuarioId")
+    void marcarComoLogado(int usuarioId);
+
+    // Desmarca qualquer utilizador que esteja com a sessão ativa (Logout)
+    @Query("UPDATE usuarios SET isLogado = 0 WHERE isLogado = 1")
+    void fazerLogout();
 }
