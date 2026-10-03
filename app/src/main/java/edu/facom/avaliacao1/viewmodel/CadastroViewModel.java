@@ -16,6 +16,7 @@ import edu.facom.avaliacao1.model.UsuarioDao;
 
 public class CadastroViewModel extends AndroidViewModel {
 
+    private MutableLiveData<Usuario> usuarioAtivo = new MutableLiveData<>();
     private UsuarioDao usuarioDao;
     private final ExecutorService executorService;
 
@@ -29,6 +30,7 @@ public class CadastroViewModel extends AndroidViewModel {
 
         // Executor para rodar as tarefas de banco de dados fora da Thread Principal (UI Thread)
         executorService = Executors.newSingleThreadExecutor();
+        usuarioAtivo.setValue(null);
     }
 
     // A View irá "observar" esse método
@@ -54,6 +56,21 @@ public class CadastroViewModel extends AndroidViewModel {
             } catch (Exception e) {
                 // Notificar falha
                 cadastroSucesso.postValue(false);
+            }
+        });
+    }
+    public LiveData<Usuario> getUsuarioAtivo() {
+        return usuarioAtivo;
+    }
+
+    public void fazerLogin(String nome, String senhaDigitada) {
+        executorService.execute(() -> {
+            try {
+                String senhaCriptografada = CriptografiaUtils.gerarHashSenha(senhaDigitada);
+                Usuario usuarioEncontrado = usuarioDao.validarLogin(nome, senhaCriptografada);
+                usuarioAtivo.postValue(usuarioEncontrado);
+            } catch (Exception e) {
+                usuarioAtivo.postValue(null);
             }
         });
     }
