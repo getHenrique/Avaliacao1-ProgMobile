@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import edu.facom.avaliacao1.R;
 import edu.facom.avaliacao1.view.AttractionsFragment;
 import edu.facom.avaliacao1.view.BirdsFragment;
 import edu.facom.avaliacao1.view.FilterFragment;
